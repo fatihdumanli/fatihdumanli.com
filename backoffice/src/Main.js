@@ -6,10 +6,11 @@ import {
 } from "react-router-dom";
 import LoadingSplash from "./view/LoadingSplash";
 import MainSettings from "./view/MainSettings";
+import Overview from "./view/Overview";
 import SocialMediaAccounts from "./view/SocialMediaAccounts";
 const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"
 
-var makePostCall = function(path, body) {
+var makePostCall = function (path, body) {
     fetch(API_ENDPOINT + path, {
         method: 'POST',
         headers: {
@@ -29,13 +30,21 @@ class Main extends Component {
         name: null,
         email: null,
         profilePicture: null,
-        siteTitle: null
+        siteTitle: null,
+        overview: null
     }
 
     constructor() {
         super()
     }
 
+    saveOverviewText = (text) => {
+        makePostCall('/site/set/overview', {
+            Overview: text
+        })
+
+        alert("ok")
+    }
 
     render() {
         return (
@@ -48,30 +57,40 @@ class Main extends Component {
                                     <NavLink exact to="/">Main Settings</NavLink>
                                 </li>
                                 <li className="list-group-item">
+                                    <NavLink to="/overview">Overview</NavLink>
+                                </li>
+
+                                <li className="list-group-item">
                                     <NavLink to="/socialmedia">Social Media Accounts</NavLink>
                                 </li>
+
+
                             </ul>
                         </div>
 
                         <div className="col-md-10">
                             <div>
-                            <Route exact path="/" render={(props) => (
-                                <MainSettings {...props} name={this.state.name} email={this.state.email}
-                                    profilePicture={this.state.profilePicture} siteTitle={this.state.siteTitle} updateSetting={this.updateSetting} />
-                            )}></Route>
-                            <Route path="/socialmedia" render={(props) => (
-                                <SocialMediaAccounts {...props} accounts={this.state.accounts} updateUsername={this.updateSocialMediaPlatFormUserName} />
-                            )}></Route>
+                                <Route exact path="/" render={(props) => (
+                                    <MainSettings {...props} name={this.state.name} email={this.state.email}
+                                        profilePicture={this.state.profilePicture} siteTitle={this.state.siteTitle} updateSetting={this.updateSetting} />
+                                )}></Route>
+                                <Route path="/socialmedia" render={(props) => (
+                                    <SocialMediaAccounts {...props} accounts={this.state.accounts} updateUsername={this.updateSocialMediaPlatFormUserName} />
+                                )}></Route>
+
+                                <Route path="/overview" render={(props) => (
+                                    <Overview {...props} overview={this.state.overview} save={this.saveOverviewText} />
+                                )}></Route>
+                            </div>
                         </div>
                     </div>
-                        </div>
-            </HashRouter>
+                </HashRouter>
 
         )
     }
 
-      
-   
+
+
     componentDidMount() {
         fetch(API_ENDPOINT + '/info?format=json')
             .then((response) => response.json())
@@ -82,7 +101,8 @@ class Main extends Component {
                     profilePicture: response.profilePicture,
                     siteTitle: response.siteTitle,
                     status: "ok",
-                    accounts: response.socialMediaAccounts
+                    accounts: response.socialMediaAccounts,
+                    overview: response.overviewText
                 })
             })
     }
@@ -95,25 +115,25 @@ class Main extends Component {
 
 
     updateSetting(key, value) {
-        if(key === 'name') {
+        if (key === 'name') {
             makePostCall('/site/set/fullname', {
                 fullName: value
             })
         }
 
-        else if(key == 'email') {
+        else if (key == 'email') {
             makePostCall('/site/set/email', {
                 email: value
             })
         }
 
-        else if(key == 'profilePicture') {
+        else if (key == 'profilePicture') {
             makePostCall('/site/set/profilePicture', {
                 profilePicture: value
             })
         }
 
-        else if(key == 'siteTitle') {
+        else if (key == 'siteTitle') {
             makePostCall('/site/set/siteTitle', {
                 siteTitle: value
             })

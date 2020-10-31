@@ -1,6 +1,7 @@
 import { React, Component } from 'react'
 import LoadingSplash from './LoadingSplash'
 import { ToastContainer } from "react-toastr";
+import Overview from './Overview';
 
 class MainSettings extends Component {
     constructor(props) {
@@ -83,7 +84,6 @@ class MainSettings extends Component {
 
                         </input>
                     </div>
-
                     <button type="submit" className="btn btn-success" onClick={this.submitForm}>Save Settings</button>
                 </form>
 

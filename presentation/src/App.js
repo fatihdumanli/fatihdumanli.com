@@ -3,7 +3,7 @@ import Table from './Table'
 import Header from './Header'
 import { Helmet } from 'react-helmet'
 import LoadingSplash from './LoadingSplash';
-
+import Parser from 'html-react-parser'
 export const execPOST = (url) => {
     return fetch(url, {
         mode: 'no-cors',
@@ -68,10 +68,12 @@ class App extends Component {
 
 
     render() {
+        const parse = require('html-react-parser');
+
         return (
-            this.state.status == null ? 
-                
-                <LoadingSplash/> :
+            this.state.status == null ?
+
+                <LoadingSplash /> :
 
                 <div className="container">
                     <Helmet>
@@ -90,7 +92,8 @@ class App extends Component {
 
                                 </div>
                                 <p className="overviewText">
-                                    {this.state.siteInfo.overviewText}
+                                    {parse(this.state.siteInfo.overviewText)}
+
                                 </p>
 
                             </div>
