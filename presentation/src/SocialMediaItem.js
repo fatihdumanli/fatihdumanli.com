@@ -58,7 +58,7 @@ class SocialMediaItem extends Component {
 
         return(
             
-            <a key={this.props.index} href={this.buildProfileUrl(this.props.platform, this.props.username)} target="_blank">
+            <a key={this.props.index} href={this.buildProfileUrl(this.props.platform, this.props.username)} target="_blank" className="socialMediaItem">
                 <img alt={this.props.alt} src={this.getPlatformIcon(this.props.platform)}
                 width="40" height="40"/>
             </a>

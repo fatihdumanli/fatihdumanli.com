@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PersonalSite.Authorization;
 using ServiceStack;
+using ServiceStack.Auth;
 
 namespace api
 {
@@ -19,6 +21,10 @@ namespace api
         public AppHost() : base("Personal", typeof(Startup).Assembly)
         {           
             Plugins.Add(new CorsFeature()); 
+            Plugins.Add(new AuthFeature(() => new AuthUserSession(),
+                new IAuthProvider[] {
+                    new SiteAuthProvider()
+                }));
         }
 
         public override void Configure(Container container)

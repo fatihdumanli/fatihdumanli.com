@@ -1,7 +1,7 @@
 import { React, Component } from 'react'
 import SocialMediaItem from './SocialMediaItem'
 
-class FlexContainer extends Component {
+class SocialMediaItems extends Component {
     render() {
 
         const rows = this.props.items.map((item, i) => {
@@ -19,4 +19,4 @@ class FlexContainer extends Component {
     }
 }
 
-export default FlexContainer
+export default SocialMediaItems

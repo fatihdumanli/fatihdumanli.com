@@ -1,5 +1,5 @@
 import { React, Component } from 'react'
-import FlexContainer from './FlexContainer'
+import SocialMediaItems from './SocialMediaItems'
 
 const Name = (props) => {
     return (
@@ -29,13 +29,34 @@ class Header extends Component {
             <div className="d-flex p-2 bd-highlight header">
 
 
-                <div className="d-flex p-2 bd-highlight flex-column">
-                    <Name value={this.props.name} />
-                    <Email value={this.props.email} />
-                    <FlexContainer items={this.props.socialMediaItems} />
+                <div className="d-flex p-2 bd-highlight flex-column full">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <ProfilePicture imageUrl={this.props.profilePicture} />
+                            </div>
+
+                            <div class="col-sm-10">
+                                <Name value={this.props.name} />
+                                <Email value={this.props.email} />
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <SocialMediaItems items={this.props.socialMediaItems} />
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
 
-                <ProfilePicture imageUrl={this.props.profilePicture} />
 
 
             </div>

@@ -22,6 +22,14 @@ code {
   src: local('OpenSans'), url(./fonts/open-sans/OpenSans-Bold.ttf) format('woff');
 }
 
+
+a.socialMediaItem {
+  margin-right: 20px;
+}
+.full {
+  width: 100%;
+}
+
 a.blogpostlink {
   color: #295e97;
   font-size: 13px;

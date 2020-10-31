@@ -3,7 +3,8 @@ import BlogPosts from './BlogPosts'
 import Header from './Header'
 import { Helmet } from 'react-helmet'
 import LoadingSplash from './LoadingSplash';
-import Parser from 'html-react-parser'
+import Overview from './Overview';
+import Portfolio from './Portfolio';
 export const execPOST = (url) => {
     return fetch(url, {
         mode: 'no-cors',
@@ -27,6 +28,7 @@ class App extends Component {
             blogposts: []
         }
     }
+
     componentWillMount() {
         fetch('https://api20201030233257.azurewebsites.net/info?format=json', {})
             .then((result) => result.json())
@@ -38,7 +40,7 @@ class App extends Component {
                 })
             })
 
-        fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@KonradDaWo')
+        fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@fatihdumanli')
             .then((result) => result.json())
             .then(result => {
                 this.setState({
@@ -61,7 +63,6 @@ class App extends Component {
 
 
     render() {
-        const parse = require('html-react-parser');
 
         return (
             this.state.status == null ?
@@ -78,16 +79,12 @@ class App extends Component {
                             email={this.state.siteInfo.email}
                             profilePicture={this.state.siteInfo.profilePicture}
                             socialMediaItems={this.state.socialMediaAccounts} />
+
+                            
                         <div className="row">
                             <div className="col-md-7">
-                                <div>
-                                    <h3 className="h3 sectionHeader"> Overview</h3>
-
-                                </div>
-                                <p className="overviewText">
-                                    {parse(this.state.siteInfo.overviewText)}
-
-                                </p>
+                               <Overview title="Overview" overviewText={this.state.siteInfo.overviewText}></Overview>
+                               <Portfolio title="Portfolio"></Portfolio>
 
                             </div>
                             <div className="col-md-5">
