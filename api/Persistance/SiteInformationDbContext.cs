@@ -1,5 +1,6 @@
 using LandingAPI.Model;
 using Microsoft.EntityFrameworkCore;
+using PersonalSite.Model;
 
 namespace LandingAPI.Persistance
 {
@@ -12,5 +13,7 @@ namespace LandingAPI.Persistance
 
        public DbSet<SocialMediaAccount> SocialMediaAccounts { get; set; }
        public DbSet<SiteInfoModel> SiteInfo { get; set; }
+       public DbSet<User> Users { get; set; }
+
     }
 }
