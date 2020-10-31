@@ -1,10 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
+using LandingAPI;
+using LandingAPI.Persistance;
+using PersonalSite.Extensions;
 using ServiceStack.Auth;
 
 namespace PersonalSite.Authorization
 {
     public class SiteAuthRepository : IUserAuthRepository
     {
+
+        private readonly SiteInformationDbContext _context;
+
+        public SiteAuthRepository()
+        {
+            _context = new SiteInformationDbContext();            
+        }
+
         public IUserAuthDetails CreateOrMergeAuthSession(IAuthSession authSession, IAuthTokens tokens)
         {
             throw new System.NotImplementedException();
@@ -55,9 +67,20 @@ namespace PersonalSite.Authorization
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// To validate given credentials are valid.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="userAuth"></param>
+        /// <returns></returns>
         public bool TryAuthenticate(string userName, string password, out IUserAuth userAuth)
         {
             userAuth = new UserAuth();
+
+            var passwordHash = password.ToMD5Hash();
+            var result = _context.Users.Where(u => u.Email == userName && u.Password == passwordHash);
+
             return true;
         }
 

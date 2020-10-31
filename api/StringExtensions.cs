@@ -1,11 +1,11 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace LandingAPI
+namespace PersonalSite.Extensions
 {
     public static class StringExtensions
     {
-        public static void ToMD5Hash(this string phrase)
+        public static string ToMD5Hash(this string phrase)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(phrase));
@@ -16,7 +16,7 @@ namespace LandingAPI
                 strBuilder.Append(result[i].ToString("x2"));
             }
 
-            phrase = strBuilder.ToString();
+            return strBuilder.ToString();
         }
 
         public static void ToEnglish(this string phrase)
