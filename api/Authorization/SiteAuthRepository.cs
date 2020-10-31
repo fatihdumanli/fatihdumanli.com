@@ -39,7 +39,11 @@ namespace PersonalSite.Authorization
 
         public IUserAuth GetUserAuth(IAuthSession authSession, IAuthTokens tokens)
         {
-            return new UserAuth() { FirstName = "fatih"};
+            return new UserAuth() {
+                FirstName = authSession.FirstName,
+                LastName = authSession.LastName,
+                Email = authSession.Email
+            };
         }
 
         public IUserAuth GetUserAuthByUserName(string userNameOrEmail)
@@ -76,12 +80,28 @@ namespace PersonalSite.Authorization
         /// <returns></returns>
         public bool TryAuthenticate(string userName, string password, out IUserAuth userAuth)
         {
-            userAuth = new UserAuth();
+            userAuth = null;
 
             var passwordHash = password.ToMD5Hash();
-            var result = _context.Users.Where(u => u.Email == userName && u.Password == passwordHash);
+            var userResult = _context.Users.Where(u => u.Username == userName).SingleOrDefault();
 
-            return true;
+            if(userResult == null)
+            {
+                return false;
+            }
+
+            if(userResult.Password.Equals(passwordHash))
+            {
+                userAuth = new UserAuth() {
+                    FirstName = userResult.Firstname,
+                    LastName = userResult.Lastname,
+                    Email = userResult.Email,         
+                };
+
+                return true;
+            }
+
+            return false;
         }
 
         public bool TryAuthenticate(Dictionary<string, string> digestHeaders, string privateKey, int nonceTimeOut, string sequence, out IUserAuth userAuth)
