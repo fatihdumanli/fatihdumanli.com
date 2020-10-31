@@ -1,5 +1,5 @@
 import { React, Component } from 'react'
-import Table from './Table'
+import BlogPosts from './BlogPosts'
 import Header from './Header'
 import { Helmet } from 'react-helmet'
 import LoadingSplash from './LoadingSplash';
@@ -23,7 +23,8 @@ class App extends Component {
         this.state = {
             status: null,
             siteInfo: {},
-            socialMediaAccounts: []
+            socialMediaAccounts: [],
+            blogposts: []
         }
     }
     componentWillMount() {
@@ -34,6 +35,14 @@ class App extends Component {
                     status: "ok",
                     siteInfo: result,
                     socialMediaAccounts: result.socialMediaAccounts
+                })
+            })
+
+        fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@KonradDaWo')
+            .then((result) => result.json())
+            .then(result => {
+                this.setState({
+                    blogposts: result.items
                 })
             })
     }
@@ -49,22 +58,6 @@ class App extends Component {
     overview = {
         "text": "Overview text comes here."
     }
-
-
-    latestBlogPosts = [
-        {
-            icon: process.env.PUBLIC_URL + '/asset/icons/026-medium.png',
-            title: "Test post 1",
-            link: "https://medium.com",
-            publishedOn: "29.10.2020"
-        },
-        {
-            icon: process.env.PUBLIC_URL + '/asset/icons/026-medium.png',
-            title: "Test post 2",
-            link: "https://medium.com",
-            publishedOn: "29.10.2020"
-        }
-    ]
 
 
     render() {
@@ -98,7 +91,7 @@ class App extends Component {
 
                             </div>
                             <div className="col-md-5">
-                                <Table name="Latest Blog Posts" items={this.latestBlogPosts}></Table>
+                                <BlogPosts name="Latest Blog Posts" items={this.state.blogposts}></BlogPosts>
                             </div>
                         </div>
 

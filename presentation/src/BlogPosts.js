@@ -13,8 +13,8 @@ const TableBody = (props) => {
     const rows = props.items.map((item, i) => {
         return (
             <tr key={i}>
-                <td width="15px;"><img src={item.icon} width="15px"></img></td>
-                <td className="sidebarMenuItem"><a href={item.link}>{item.title}</a></td>
+                <td width="15px;"><img src={process.env.PUBLIC_URL + '/asset/icons/026-medium.png'} width="15px"></img></td>
+                <td className="sidebarMenuItem"><a href={item.link} className="blogpostlink" target="_blank">{item.title}</a></td>
                 <td className="sidebarMenuItem">{item.publishedOn}</td>
             </tr>
         )
@@ -27,7 +27,7 @@ const TableBody = (props) => {
     )
 }
 
-class Table extends Component {
+class BlogPosts extends Component {
     render() {
         return (
             <div>
@@ -52,4 +52,4 @@ class Table extends Component {
     }
 }
 
-export default Table
+export default BlogPosts

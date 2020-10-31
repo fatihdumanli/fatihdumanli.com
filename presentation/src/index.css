@@ -22,6 +22,11 @@ code {
   src: local('OpenSans'), url(./fonts/open-sans/OpenSans-Bold.ttf) format('woff');
 }
 
+a.blogpostlink {
+  color: #295e97;
+  font-size: 13px;
+  font-family: OpenSans;
+}
 .loadingDiv {
   position: absolute;
   top: 50%;
