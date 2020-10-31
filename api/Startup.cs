@@ -19,8 +19,8 @@ namespace api
     class AppHost : ServiceStack.AppHostBase
     {
         public AppHost() : base("Personal", typeof(Startup).Assembly)
-        {           
-            Plugins.Add(new CorsFeature()); 
+        {
+            Plugins.Add(new CorsFeature());
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
                 new IAuthProvider[] {
                     new SiteAuthProvider()
@@ -29,6 +29,11 @@ namespace api
 
         public override void Configure(Container container)
         {
+            var userRepo = new InMemoryAuthRepository();
+            container.Register<IAuthRepository>(userRepo);
+
+            //The IAuthRepository is used to store the user credentials etc.
+            //Implement this interface to adjust it to your app's data storage
         }
     }
 
