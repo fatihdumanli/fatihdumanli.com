@@ -9,7 +9,6 @@ namespace PersonalSite.Authorization
 {
     public class SiteAuthRepository : IUserAuthRepository
     {
-
         private readonly SiteInformationDbContext _context;
 
         public SiteAuthRepository()
@@ -24,12 +23,23 @@ namespace PersonalSite.Authorization
 
         public IUserAuth CreateUserAuth(IUserAuth newUser, string password)
         {
-            throw new System.NotImplementedException();
+            var user = new Model.User() {
+                Firstname = newUser.FirstName,
+                Lastname = newUser.LastName,
+                Email = newUser.Email,
+                Password = newUser.PasswordHash
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            return newUser;
         }
 
         public void DeleteUserAuth(string userAuthId)
         {
-            throw new System.NotImplementedException();
+            var userAuth = _context.Users.Where(u => u.Id.ToString() == userAuthId).SingleOrDefault();
+            _context.Users.Remove(userAuth);
+            _context.SaveChanges();
         }
 
         public IUserAuth GetUserAuth(string userAuthId)
@@ -48,7 +58,13 @@ namespace PersonalSite.Authorization
 
         public IUserAuth GetUserAuthByUserName(string userNameOrEmail)
         {
-            throw new System.NotImplementedException();
+            var user = _context.Users.Where(u => u.Username == userNameOrEmail || u.Email == userNameOrEmail).SingleOrDefault();
+            return new UserAuth() {
+                FirstName = user.Firstname,
+                LastName = user.Lastname,
+                Email = user.Email,
+                PasswordHash = user.Password
+            };
         }
 
         public List<IUserAuthDetails> GetUserAuthDetails(string userAuthId)
@@ -58,7 +74,7 @@ namespace PersonalSite.Authorization
 
         public void LoadUserAuth(IAuthSession session, IAuthTokens tokens)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void SaveUserAuth(IAuthSession authSession)
@@ -71,13 +87,7 @@ namespace PersonalSite.Authorization
             throw new System.NotImplementedException();
         }
 
-        /// <summary>
-        /// To validate given credentials are valid.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="userAuth"></param>
-        /// <returns></returns>
+        //        
         public bool TryAuthenticate(string userName, string password, out IUserAuth userAuth)
         {
             userAuth = null;

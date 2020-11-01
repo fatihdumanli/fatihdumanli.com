@@ -31,9 +31,6 @@ namespace api
         {
             var userRepo = new SiteAuthRepository();
             container.Register<IUserAuthRepository>(userRepo);
-
-            //The IAuthRepository is used to store the user credentials etc.
-            //Implement this interface to adjust it to your app's data storage
         }
     }
 

@@ -84,8 +84,7 @@ class App extends Component {
                         <div className="row">
                             <div className="col-md-7">
                                <Overview title="Overview" overviewText={this.state.siteInfo.overviewText}></Overview>
-                               <Portfolio title="Portfolio"></Portfolio>
-
+                            
                             </div>
                             <div className="col-md-5">
                                 <BlogPosts name="Latest Blog Posts" items={this.state.blogposts}></BlogPosts>
