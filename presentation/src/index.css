@@ -100,6 +100,7 @@ table td {
 
 .sectionHeader {
   padding: 10px;
+  color: #88b3d5;
   border-bottom: 1px solid #ccc;
 }
 
@@ -124,4 +125,54 @@ table td {
 h1 {
   font-family: OpenSansBold;
   color: #6e7b88;
+}
+
+.posts-container {
+  /* We first create a flex layout context */
+  display: flex;
+  
+  flex-flow: column wrap;
+  
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+  
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.vertical-flexbox {
+  display: flex;
+  
+  flex-flow: row wrap;
+  
+  /* Then we define how is distributed the remaining space */  
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.post-item {
+  padding: 5px;
+  width: 100%;
+  height: 110px;
+  margin-top: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.post-title {
+  font-size: 14px;
+  color: #000;
+}
+
+.post-date {
+  margin-top: 5px;
+  color: #8c8c8c;
+  font-size: 11px;
+}
+
+.post-thumbnail {
+  width: 90px;
+  height: 90px;
 }

@@ -1,40 +1,11 @@
 import { React, Component } from 'react'
+import BlogPost from './BlogPost'
 
-const TableHeader = () => {
-    return (
-        <thead>
-
-        </thead>
-    )
-}
-
-const TableBody = (props) => {
-
-    if(props.items == null)
-        return;
-        
-    const rows = props.items.map((item, i) => {
-        return (
-            <tr key={i}>
-                <td width="15px;"><img src={process.env.PUBLIC_URL + '/asset/icons/026-medium.png'} width="15px"></img></td>
-                <td className="sidebarMenuItem"><a href={item.link} className="blogpostlink" target="_blank">{item.title}</a></td>
-                <td className="sidebarMenuItem">{item.publishedOn}</td>
-            </tr>
-        )
-    })
-
-    return (
-        <tbody>
-            {rows}
-        </tbody>
-    )
-}
 
 class BlogPosts extends Component {
     render() {
         return (
             <div>
-
 
                 <h3 className="sectionHeader">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -44,10 +15,13 @@ class BlogPosts extends Component {
                     &nbsp; &nbsp;
                     {this.props.name}</h3>
 
-                <table className="table">
-                    <TableHeader />
-                    <TableBody items={this.props.items}></TableBody>
-                </table>
+                    <ul className="posts-container">
+                        {this.props.items.map((item, index) => {
+                            return (
+                                <BlogPost index={index} title={item.title} pubDate={item.pubDate} thumbnail={item.thumbnail} link={item.link}></BlogPost>
+                            )
+                        })}
+                    </ul>
 
             </div>
 
