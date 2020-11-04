@@ -8,6 +8,8 @@ import LoadingSplash from "./view/LoadingSplash";
 import MainSettings from "./view/MainSettings";
 import Overview from "./view/Overview";
 import SocialMediaAccounts from "./view/SocialMediaAccounts";
+import Projects from "./view/Projects";
+
 const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"
 
 
@@ -69,8 +71,14 @@ class Main extends Component {
                                 </li>
 
                                 <li className="list-group-item">
+                                    <NavLink to="/projects">Projects</NavLink>
+                                </li>
+
+                                <li className="list-group-item">
                                     <NavLink to="/socialmedia">Social Media Accounts</NavLink>
                                 </li>
+
+
 
 
                             </ul>
@@ -82,6 +90,11 @@ class Main extends Component {
                                     <MainSettings {...props} name={this.state.name} email={this.state.email}
                                         profilePicture={this.state.profilePicture} siteTitle={this.state.siteTitle} updateSetting={this.updateSetting} />
                                 )}></Route>
+
+                                <Route path="/projects" render={(props) => (
+                                    <Projects {...props} />
+                                )}></Route>
+
                                 <Route path="/socialmedia" render={(props) => (
                                     <SocialMediaAccounts {...props} accounts={this.state.accounts} updateUsername={this.updateSocialMediaPlatFormUserName} />
                                 )}></Route>
