@@ -15,6 +15,7 @@ class Overview extends Component {
 
                 </div>
                 <p className="overviewText">
+                    {parse(this.props.overviewText)}
                 </p>
             </div>
         )

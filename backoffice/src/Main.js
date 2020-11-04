@@ -10,17 +10,6 @@ import Overview from "./view/Overview";
 import SocialMediaAccounts from "./view/SocialMediaAccounts";
 const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"
 
-var makePostCall = function (path, body) {
-    fetch(API_ENDPOINT + path, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body)
-    })
-}
-
 
 
 class Main extends Component {
@@ -31,15 +20,34 @@ class Main extends Component {
         email: null,
         profilePicture: null,
         siteTitle: null,
-        overview: null
+        overview: null,
+        sessionId: null
     }
 
     constructor() {
         super()
     }
 
+    makePostCall = (path, body) => {
+
+        /*
+        if (this.state.sessionId == null) {
+            this.authenticate()
+        }
+        */
+
+        fetch(API_ENDPOINT + path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        })
+    }
+
     saveOverviewText = (text) => {
-        makePostCall('/site/set/overview', {
+        this.makePostCall('/site/set/overview', {
             Overview: text
         })
 
@@ -108,38 +116,64 @@ class Main extends Component {
     }
 
     updateSocialMediaPlatFormUserName(platform, username) {
-        makePostCall('/site/set/socialmedia/' + platform, {
+        this.makePostCall('/site/set/socialmedia/' + platform, {
             Username: username
         })
     }
 
+    authenticate = () => {
+        let pwd = prompt("Enter the password")
+        let payload = {
+            username: "fatih",
+            password: pwd
+        }
+        fetch(API_ENDPOINT + '/auth/credentials?format=json', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        }).then((response) => response.json())
+            .then(response => {
+                if (response.sessionId == null) {
+                    alert("Incorrect password")
+                }
 
-    updateSetting(key, value) {
+                else {
+                    this.setState({
+                        sessionId: response.sessionId
+                    })
+                }
+            }
+            )
+    }
+
+    updateSetting = (key, value) => {
+
         if (key === 'name') {
-            makePostCall('/site/set/fullname', {
+            this.makePostCall('/site/set/fullname', {
                 fullName: value
             })
         }
 
         else if (key == 'email') {
-            makePostCall('/site/set/email', {
+            this.makePostCall('/site/set/email', {
                 email: value
             })
         }
 
         else if (key == 'profilePicture') {
-            makePostCall('/site/set/profilePicture', {
+            this.makePostCall('/site/set/profilePicture', {
                 profilePicture: value
             })
         }
 
         else if (key == 'siteTitle') {
-            makePostCall('/site/set/siteTitle', {
+            this.makePostCall('/site/set/siteTitle', {
                 siteTitle: value
             })
         }
-
-        alert("ok")
     }
 
 

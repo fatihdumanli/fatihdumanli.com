@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersonalSite.Authorization;
+using PersonalSite.Model;
 using ServiceStack;
 using ServiceStack.Auth;
 

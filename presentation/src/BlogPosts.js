@@ -10,6 +10,9 @@ const TableHeader = () => {
 
 const TableBody = (props) => {
 
+    if(props.items == null)
+        return;
+        
     const rows = props.items.map((item, i) => {
         return (
             <tr key={i}>
