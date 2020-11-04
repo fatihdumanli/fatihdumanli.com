@@ -176,3 +176,7 @@ h1 {
   width: 90px;
   height: 90px;
 }
+
+.project-item {
+  margin-bottom: 5px;
+}
