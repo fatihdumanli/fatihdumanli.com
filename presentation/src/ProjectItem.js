@@ -16,9 +16,9 @@ class ProjectItem extends Component {
                             <div className="col-sm-9">
                                 <h5 className="card-title">{this.props.title}</h5>
                                 <p className="card-text">{this.props.description}</p>
-                                <a href="https://github.com/fatihdumanli/EventTower" target="_blank" className="btn btn-primary">Explore on GitHub</a>
+                                <a href={this.props.link} target="_blank" className="btn btn-primary">Explore on GitHub</a>
                             </div>
-                            <img className="col-sm-3" src={this.props.thumbnail} alt="sans" />
+                            <img className="col-sm-3" src={this.props.thumbnail} alt={this.props.title} />
                         </div>
                     </div>
                 </div>

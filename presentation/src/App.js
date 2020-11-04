@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import LoadingSplash from './LoadingSplash';
 import Overview from './Overview';
 import Portfolio from './Portfolio';
+import configFile from './config.json'
 export const execPOST = (url) => {
     return fetch(url, {
         mode: 'no-cors',
@@ -15,8 +16,8 @@ export const execPOST = (url) => {
     });
 };
 
-/*const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"*/
-const API_ENDPOINT = "http://localhost:5000"
+/*const API_ENDPOINT = ""*/
+const API_ENDPOINT = configFile.apiEndpoint
 
 class App extends Component {
 
@@ -28,7 +29,8 @@ class App extends Component {
             status: null,
             siteInfo: {},
             socialMediaAccounts: [],
-            blogposts: []
+            blogposts: [],
+            projects: []
         }
     }
 
@@ -39,11 +41,12 @@ class App extends Component {
                 this.setState({
                     status: "ok",
                     siteInfo: result.siteInfo,
-                    socialMediaAccounts: result.siteInfo.socialMediaAccounts
+                    socialMediaAccounts: result.siteInfo.socialMediaAccounts,
+                    projects: result.projects
                 })
             })
 
-        fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@fatihdumanli')
+        fetch(configFile.mediumRss)
             .then((result) => result.json())
             .then(result => {
                 this.setState({
@@ -87,7 +90,7 @@ class App extends Component {
                         <div className="row">
                             <div className="col-md-7">
                                <Overview title="Overview" overviewText={this.state.siteInfo.overviewText}></Overview>
-                               <Portfolio title="Projects"></Portfolio>
+                               <Portfolio title="Projects" items={this.state.projects}></Portfolio>
                             </div>
                             <div className="col-md-5">
                                 <BlogPosts name="Latest Blog Posts" items={this.state.blogposts}></BlogPosts>

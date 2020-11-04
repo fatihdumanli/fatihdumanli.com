@@ -15,7 +15,6 @@ class Projects extends Component {
     }
 
     created = () => {
-        alert("test")
         this.setState({mode: "list"})
         this.setState({edit: { id: null }})
     }
@@ -27,7 +26,7 @@ class Projects extends Component {
         this.state = {
             "mode":"list",
             "edit": {
-                id: ""
+                id: null
             },
             "id":"",
             "projects": []
@@ -49,7 +48,7 @@ class Projects extends Component {
             this.component = <ProjectList editCallback={this.edit}></ProjectList>
         }
 
-        if(nextState.edit.id !== null) {
+        if(nextState.edit.id !== null && nextState.edit !== "") {
             this.component = <EditProject id={nextState.edit.id} updatedCallback={this.created}></EditProject>
         }
     }
