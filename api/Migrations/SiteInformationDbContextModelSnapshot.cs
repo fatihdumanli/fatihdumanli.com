@@ -88,10 +88,15 @@ namespace api.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("SiteInfoModelId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Thumbnail")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SiteInfoModelId");
 
                     b.ToTable("Projects");
                 });
@@ -124,7 +129,7 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7fc290a3-08b6-405e-b28f-53a1b27eea29"),
+                            Id = new Guid("93907b31-e18a-43d9-8c1a-4ce3af4df2a1"),
                             Password = "60b5cf7240d65952b2910c697fc2f84c",
                             Username = "fatih"
                         });
@@ -134,6 +139,13 @@ namespace api.Migrations
                 {
                     b.HasOne("LandingAPI.Model.SiteInfoModel", null)
                         .WithMany("SocialMediaAccounts")
+                        .HasForeignKey("SiteInfoModelId");
+                });
+
+            modelBuilder.Entity("PersonalSite.Model.ProjectItem", b =>
+                {
+                    b.HasOne("LandingAPI.Model.SiteInfoModel", null)
+                        .WithMany("Projects")
                         .HasForeignKey("SiteInfoModelId");
                 });
 #pragma warning restore 612, 618

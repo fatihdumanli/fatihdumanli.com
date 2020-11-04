@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using LandingAPI.Enums;
 using LandingAPI.Model;
@@ -15,7 +16,12 @@ namespace PersonalSite
         {
             var siteInfo = dbContext.SiteInfo.SingleOrDefault();
             siteInfo.SocialMediaAccounts = dbContext.SocialMediaAccounts.ToList();
-            return siteInfo;
+            var projects = dbContext.Projects.ToList();
+
+            var info = new { siteInfo = siteInfo, 
+                projects = dbContext.Projects.ToList() };   
+          
+            return info;
         }
 
         public object Any(Services.SetFullName request)
