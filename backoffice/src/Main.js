@@ -10,8 +10,8 @@ import Overview from "./view/Overview";
 import SocialMediaAccounts from "./view/SocialMediaAccounts";
 import Projects from "./view/Projects";
 
-const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"
-
+/*const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"*/
+const API_ENDPOINT = "http://localhost:5000"
 
 
 class Main extends Component {
@@ -117,13 +117,13 @@ class Main extends Component {
             .then((response) => response.json())
             .then((response) => {
                 this.setState({
-                    name: response.name,
-                    email: response.email,
-                    profilePicture: response.profilePicture,
-                    siteTitle: response.siteTitle,
+                    name: response.siteInfo.name,
+                    email: response.siteInfo.email,
+                    profilePicture: response.siteInfo.profilePicture,
+                    siteTitle: response.siteInfo.siteTitle,
                     status: "ok",
-                    accounts: response.socialMediaAccounts,
-                    overview: response.overviewText
+                    accounts: response.siteInfo.socialMediaAccounts,
+                    overview: response.siteInfo.overviewText
                 })
             })
     }

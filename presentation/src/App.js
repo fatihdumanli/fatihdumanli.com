@@ -15,6 +15,9 @@ export const execPOST = (url) => {
     });
 };
 
+/*const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"*/
+const API_ENDPOINT = "http://localhost:5000"
+
 class App extends Component {
 
 
@@ -30,13 +33,13 @@ class App extends Component {
     }
 
     componentWillMount() {
-        fetch('https://api20201030233257.azurewebsites.net/info?format=json', {})
+        fetch(API_ENDPOINT + '/info?format=json', {})
             .then((result) => result.json())
             .then((result) => {
                 this.setState({
                     status: "ok",
-                    siteInfo: result,
-                    socialMediaAccounts: result.socialMediaAccounts
+                    siteInfo: result.siteInfo,
+                    socialMediaAccounts: result.siteInfo.socialMediaAccounts
                 })
             })
 
