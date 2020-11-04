@@ -8,11 +8,10 @@ import LoadingSplash from "./view/LoadingSplash";
 import MainSettings from "./view/MainSettings";
 import Overview from "./view/Overview";
 import SocialMediaAccounts from "./view/SocialMediaAccounts";
-import Projects from "./view/Projects";
+import Projects from "./view/projects/Projects";
+import configData from "./config.json";
 
-/*const API_ENDPOINT = "https://api20201030233257.azurewebsites.net"*/
-const API_ENDPOINT = "http://localhost:5000"
-
+const API_ENDPOINT = configData.apiEndpoint;
 
 class Main extends Component {
 

@@ -19,3 +19,7 @@ body {
   .fullWidth {
     width: 100%;
   }
+
+  .project-item {
+    margin-bottom: 10px;
+  }

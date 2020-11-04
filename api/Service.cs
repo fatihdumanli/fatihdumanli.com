@@ -152,7 +152,7 @@ namespace PersonalSite
         public object Any(Services.AddOrUpdateProjectItem request)
         {
 
-            if (request.Id == null)
+            if (request.Id == Guid.Empty)
             {
                 var projectItem = new Model.ProjectItem()
                 {
@@ -182,6 +182,12 @@ namespace PersonalSite
             }
 
 
+        }
+
+        public object Any(Services.GetProjectById request)
+        {
+            var project = dbContext.Projects.Where(p => p.Id == request.Id).SingleOrDefault();
+            return project;            
         }
 
     }
