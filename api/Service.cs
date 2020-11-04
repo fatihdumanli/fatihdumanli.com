@@ -1,9 +1,10 @@
+using System;
 using System.Linq;
 using LandingAPI.Enums;
 using LandingAPI.Model;
 using LandingAPI.Persistance;
 
-namespace LandingAPI
+namespace PersonalSite
 {
     public class Service : ServiceStack.Service
     {
@@ -12,7 +13,7 @@ namespace LandingAPI
 
         public object Any(Services.GetSiteInformation request)
         {
-            var siteInfo =  dbContext.SiteInfo.SingleOrDefault();
+            var siteInfo = dbContext.SiteInfo.SingleOrDefault();
             siteInfo.SocialMediaAccounts = dbContext.SocialMediaAccounts.ToList();
             return siteInfo;
         }
@@ -21,7 +22,7 @@ namespace LandingAPI
         {
             SiteInfoModel siteInformation = dbContext.SiteInfo.SingleOrDefault();
 
-            if(siteInformation == null)
+            if (siteInformation == null)
             {
                 siteInformation = new SiteInfoModel();
                 siteInformation.Version = 1;
@@ -32,14 +33,14 @@ namespace LandingAPI
             siteInformation.Name = request.FullName;
             siteInformation.Version = siteInformation.Version + 1;
             dbContext.SaveChanges();
-            return true;                   
+            return true;
         }
 
         public object Any(Services.SetEmail request)
         {
             SiteInfoModel siteInformation = dbContext.SiteInfo.SingleOrDefault();
 
-            if(siteInformation == null)
+            if (siteInformation == null)
             {
                 siteInformation = new SiteInfoModel();
                 siteInformation.Version = 1;
@@ -51,7 +52,7 @@ namespace LandingAPI
             siteInformation.Version = siteInformation.Version + 1;
 
             dbContext.SaveChanges();
-            return true;                   
+            return true;
         }
 
 
@@ -59,11 +60,11 @@ namespace LandingAPI
         {
             SocialMediaPlatform platform = null;
 
-            try 
+            try
             {
                 platform = SocialMediaPlatform.FromDisplayName<SocialMediaPlatform>(request.Platform);
-            } 
-            
+            }
+
             catch
             {
                 return string.Format("Please use one of those platforms {0}", string.Join(',', SocialMediaPlatform.GetAll<SocialMediaPlatform>().Select(w => w.Name)));
@@ -71,27 +72,27 @@ namespace LandingAPI
 
 
             var socialMediaAccount = dbContext.SocialMediaAccounts.Where(sm => sm.PlatformId == platform.Id).SingleOrDefault();
-            
-            if(socialMediaAccount == null)
+
+            if (socialMediaAccount == null)
             {
                 socialMediaAccount = new SocialMediaAccount() { PlatformId = platform.Id, Username = request.Username };
-                socialMediaAccount.Version = 1;       
+                socialMediaAccount.Version = 1;
                 dbContext.SocialMediaAccounts.Add(socialMediaAccount);
                 dbContext.SaveChanges();
                 return true;
             }
 
-            
-            socialMediaAccount.Username = request.Username;    
+
+            socialMediaAccount.Username = request.Username;
             dbContext.SaveChanges();
-            return true;                   
+            return true;
         }
 
         public object Any(Services.SetOverview request)
         {
             SiteInfoModel siteInformation = dbContext.SiteInfo.SingleOrDefault();
 
-            if(siteInformation == null)
+            if (siteInformation == null)
             {
                 siteInformation = new SiteInfoModel();
                 siteInformation.Version = 1;
@@ -102,14 +103,14 @@ namespace LandingAPI
             siteInformation.OverviewText = request.Overview;
             siteInformation.Version = siteInformation.Version + 1;
             dbContext.SaveChanges();
-            return true;                   
+            return true;
         }
 
         public object Any(Services.SetProfilePicture request)
         {
             SiteInfoModel siteInformation = dbContext.SiteInfo.SingleOrDefault();
 
-            if(siteInformation == null)
+            if (siteInformation == null)
             {
                 siteInformation = new SiteInfoModel();
                 siteInformation.Version = 1;
@@ -120,14 +121,14 @@ namespace LandingAPI
             siteInformation.ProfilePicture = request.ProfilePicture;
             siteInformation.Version = siteInformation.Version + 1;
             dbContext.SaveChanges();
-            return true;                   
+            return true;
         }
 
-         public object Any(Services.SetSiteTitle request)
+        public object Any(Services.SetSiteTitle request)
         {
             SiteInfoModel siteInformation = dbContext.SiteInfo.SingleOrDefault();
 
-            if(siteInformation == null)
+            if (siteInformation == null)
             {
                 siteInformation = new SiteInfoModel();
                 siteInformation.Version = 1;
@@ -138,7 +139,43 @@ namespace LandingAPI
             siteInformation.SiteTitle = request.SiteTitle;
             siteInformation.Version = siteInformation.Version + 1;
             dbContext.SaveChanges();
-            return true;                   
+            return true;
+        }
+
+
+        public object Any(Services.AddOrUpdateProjectItem request)
+        {
+
+            if (request.Id == null)
+            {
+                var projectItem = new Model.ProjectItem()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = request.Name,
+                    Description = request.Description,
+                    Thumbnail = request.Thumbnail,
+                    Link = request.Link
+                };
+
+
+                dbContext.Projects.Add(projectItem);
+                dbContext.SaveChanges();
+                return true;
+            }
+
+            else
+            {
+                var projectItem = dbContext.Projects.Where(p => p.Id == request.Id).SingleOrDefault();
+                projectItem.Name = request.Name;
+                projectItem.Description = request.Description;
+                projectItem.Thumbnail = request.Thumbnail;
+                projectItem.Link = request.Link;
+                dbContext.Projects.Update(projectItem);
+                dbContext.SaveChanges();
+                return true;
+            }
+
+
         }
 
     }

@@ -1,7 +1,7 @@
 using LandingAPI.Model;
 using ServiceStack;
 
-namespace LandingAPI.Services
+namespace PersonalSite.Services
 {
     [Route("/info", "GET")]
     [EnableCors(allowedMethods:"GET,POST")]

@@ -1,7 +1,6 @@
-using LandingAPI.Enums;
 using ServiceStack;
 
-namespace LandingAPI.Services
+namespace PersonalSite.Services
 {
     [Route("/site/set/socialmedia/{Platform}")]
     public class SetSocialMediaAccount : IReturn<bool>

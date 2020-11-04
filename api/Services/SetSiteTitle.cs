@@ -1,6 +1,6 @@
 using ServiceStack;
 
-namespace LandingAPI.Services
+namespace PersonalSite.Services
 {
     [Route("/site/set/sitetitle", "POST")]
     public class SetSiteTitle : IReturn<bool>

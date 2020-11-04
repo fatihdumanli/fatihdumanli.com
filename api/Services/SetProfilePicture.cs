@@ -1,6 +1,6 @@
 using ServiceStack;
 
-namespace LandingAPI.Services
+namespace PersonalSite.Services
 {
     [Route("/site/set/profilepicture")]
     public class SetProfilePicture : IReturn<bool>
